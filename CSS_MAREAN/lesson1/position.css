@@ -1,0 +1,22 @@
+.box{
+    width: 470px;
+    height: 470px;
+    border: 15px solid blue;
+    margin: auto;
+    border-radius: 100%;
+    position: relative;
+}
+.box img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+.absolute{
+    width: 70px;
+    height: 70px;
+    right: 30px;
+    bottom: 10px;
+    position: absolute;
+    border-radius: 100%;
+    background-color: green;
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Phone Shop Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+        h1 {
+            margin-top: 0;
+            text-align: center;
+            color: #1a202c;
+        }
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        form input, form select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccd0d6;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        form button {
+            grid-column: span 2;
+            padding: 12px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        form button:hover {
+            background: #1d4ed8;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .actions input {
+            flex: 1;
+            min-width: 220px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+        }
+        table th, table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        table th {
+            background: #f3f4f6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+        }
+        .btn.edit { background: #10b981; }
+        .btn.delete { background: #ef4444; }
+        .summary {
+            margin-top: 12px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Phone Shop Management</h1>
+
+        <form id="phoneForm">
+            <input type="hidden" id="editIndex" value="-1" />
+            <input type="text" id="model" placeholder="Phone Model" required />
+            <input type="text" id="brand" placeholder="Brand" required />
+            <input type="number" id="price" placeholder="Price" min="1" required />
+            <input type="number" id="quantity" placeholder="Quantity" min="1" required />
+            <button type="submit">Save Phone</button>
+        </form>
+
+        <div class="actions">
+            <input type="text" id="search" placeholder="Search by model or brand" />
+            <button id="clearAll" class="btn delete">Clear Inventory</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Model</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Value</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="inventoryBody">
+            </tbody>
+        </table>
+
+        <div class="summary" id="inventorySummary">
+            No phones in inventory.
+        </div>
+    </div>
+
+    <script>
+        const phoneForm = document.getElementById('phoneForm');
+        const inventoryBody = document.getElementById('inventoryBody');
+        const searchInput = document.getElementById('search');
+        const clearAllBtn = document.getElementById('clearAll');
+        const summary = document.getElementById('inventoryS         ummary');
+        const editIndexInput = document.getElementById('editIndex');
+
+        let phones = JSON.parse(localStorage.getItem('phoneInventory') || '[]');
+
+        function savePhones() {
+            localStorage.setItem('phoneInventory', JSON.stringify(phones));
+        }
+
+        function renderInventory() {
+            const filterText = searchInput.value.trim().toLowerCase();
+            const filtered = phones.filter(phone => {
+                return (
+                    phone.model.toLowerCase().includes(filterText) ||
+                    phone.brand.toLowerCase().includes(filterText)
+                );
+            });
+
+            inventoryBody.innerHTML = '';
+
+            if (!filtered.length) {
+                inventoryBody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#6b7280;">No phones found.</td></tr>';
+            } else {
+                filtered.forEach((phone, index) => {
+                    const totalValue = (phone.price * phone.quantity).toFixed(2);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${phone.model}</td>
+                        <td>${phone.brand}</td>
+                        <td>$${phone.price.toFixed(2)}</td>
+                        <td>${phone.quantity}</td>
+                        <td>$${totalValue}</td>
+                        <td>
+                            <button class="btn edit" data-index="${index}">Edit</button>
+                            <button class="btn delete" data-index="${index}">Delete</button>
+                        </td>
+                    `;
+                    inventoryBody.appendChild(row);
+                });
+            }
+
+            const totalItems = phones.reduce((sum, p) => sum + p.quantity, 0);
+            const totalWorth = phones.reduce((sum, p) => sum + p.price * p.quantity, 0).toFixed(2);
+            summary.textContent = `Inventory: ${phones.length} products, ${totalItems} units, total worth $${totalWorth}.`;
+        }
+
+        function resetForm() {
+            phoneForm.reset();
+            editIndexInput.value = '-1';
+            phoneForm.querySelector('button').textContent = 'Save Phone';
+        }
+
+        phoneForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const model = document.getElementById('model').value.trim();
+            const brand = document.getElementById('brand').value.trim();
+            const price = parseFloat(document.getElementById('price').value);
+            const quantity = parseInt(document.getElementById('quantity').value, 10);
+            const editIndex = parseInt(editIndexInput.value, 10);
+
+            if (!model || !brand || price <= 0 || quantity <= 0) {
+                return;
+            }
+
+            const phoneData = { model, brand, price, quantity };
+
+            if (editIndex >= 0 && editIndex < phones.length) {
+                phones[editIndex] = phoneData;
+            } else {
+                phones.push(phoneData);
+            }
+
+            savePhones();
+            renderInventory();
+            resetForm();
+        });
+
+        inventoryBody.addEventListener('click', event => {
+            const target = event.target;
+            if (!target.dataset.index) return;
+            const index = Number(target.dataset.index);
+
+            if (target.classList.contains('edit')) {
+                const phone = phones[index];
+                document.getElementById('model').value = phone.model;
+                document.getElementById('brand').value = phone.brand;
+                document.getElementById('price').value = phone.price;
+                document.getElementById('quantity').value = phone.quantity;
+                editIndexInput.value = index;
+                phoneForm.querySelector('button').textContent = 'Update Phone';
+            }
+
+            if (target.classList.contains('delete')) {
+                phones.splice(index, 1);
+                savePhones();
+                renderInventory();
+            }
+        });
+
+        searchInput.addEventListener('input', renderInventory);
+
+        clearAllBtn.addEventListener('click', () => {
+            if (!confirm('Clear all phones from inventory?')) return;
+            phones = [];
+            savePhones();
+            renderInventory();
+            resetForm();
+        });
+
+        renderInventory();
+    </script>
+</body>
+</html>

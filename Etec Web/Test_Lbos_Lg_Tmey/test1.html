@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Stock Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #f4f6fa;
+            color: #222;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .panel {
+            max-width: 960px;
+            margin: 0 auto 24px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            align-items: end;
+        }
+        label {
+            display: grid;
+            gap: 6px;
+            font-size: 0.95rem;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cfd6df;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        button {
+            cursor: pointer;
+            background: #1f80ff;
+            color: #fff;
+            border: none;
+        }
+        button:hover {
+            background: #1668d0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e3e8ef;
+            text-align: left;
+        }
+        th {
+            background: #f0f4fb;
+        }
+        .actions button {
+            margin-right: 6px;
+            padding: 6px 10px;
+            font-size: 0.9rem;
+        }
+        .actions button.edit {
+            background: #2d8f2d;
+            color: #fff;
+        }
+        .actions button.delete {
+            background: #d03232;
+            color: #fff;
+        }
+        @media (max-width: 640px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Car Stock & Price Manager</h1>
+        <p>Track inventory and update car prices instantly.</p>
+    </header>
+
+    <section class="panel">
+        <form id="carForm">
+            <label>
+                Make
+                <input type="text" id="make" required placeholder="Toyota, Ford...">
+            </label>
+            <label>
+                Model
+                <input type="text" id="model" required placeholder="Corolla, Mustang...">
+            </label>
+            <label>
+                Year
+                <input type="number" id="year" required min="1900" max="2099" placeholder="2025">
+            </label>
+            <label>
+                Price
+                <input type="number" id="price" required min="0" step="0.01" placeholder="25000">
+            </label>
+            <input type="hidden" id="editIndex">
+            <button type="submit">Add / Update Car</button>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Current Stock</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="stockBody"></tbody>
+        </table>
+    </section>
+
+    <script>
+        const form = document.getElementById('carForm');
+        const stockBody = document.getElementById('stockBody');
+        const makeInput = document.getElementById('make');
+        const modelInput = document.getElementById('model');
+        const yearInput = document.getElementById('year');
+        const priceInput = document.getElementById('price');
+        const editIndexInput = document.getElementById('editIndex');
+
+        let cars = JSON.parse(localStorage.getItem('carStock') || '[]');
+
+        function saveCars() {
+            localStorage.setItem('carStock', JSON.stringify(cars));
+        }
+
+        function formatMoney(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(value);
+        }
+
+        function renderStock() {
+            stockBody.innerHTML = '';
+            if (cars.length === 0) {
+                stockBody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 18px;">No cars in stock yet.</td></tr>';
+                return;
+            }
+
+            cars.forEach((car, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${car.make}</td>
+                    <td>${car.model}</td>
+                    <td>${car.year}</td>
+                    <td>${formatMoney(car.price)}</td>
+                    <td class="actions">
+                        <button type="button" class="edit" data-index="${index}">Edit</button>
+                        <button type="button" class="delete" data-index="${index}">Delete</button>
+                    </td>
+                `;
+                stockBody.appendChild(row);
+            });
+        }
+
+        function resetForm() {
+            form.reset();
+            editIndexInput.value = '';
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const car = {
+                make: makeInput.value.trim(),
+                model: modelInput.value.trim(),
+                year: parseInt(yearInput.value, 10),
+                price: parseFloat(priceInput.value)
+            };
+
+            const editIndex = editIndexInput.value;
+            if (editIndex !== '') {
+                cars[editIndex] = car;
+            } else {
+                cars.push(car);
+            }
+
+            saveCars();
+            renderStock();
+            resetForm();
+        });
+
+        stockBody.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!target.dataset.index) return;
+            const index = Number(target.dataset.index);
+
+            if (target.classList.contains('edit')) {
+                const car = cars[index];
+                makeInput.value = car.make;
+                modelInput.value = car.model;
+                yearInput.value = car.year;
+                priceInput.value = car.price;
+                editIndexInput.value = index;
+            }
+
+            if (target.classList.contains('delete')) {
+                cars.splice(index, 1);
+                saveCars();
+                renderStock();
+            }
+        });
+
+        renderStock();
+    </script>
+</body>
+</html>
