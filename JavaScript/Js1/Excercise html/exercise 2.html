@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+</head>
+<body>
+    <script>
+        let id;
+        let name;
+        let gender, position;
+        let age;
+        let hour, rat , salary , total_salary;
+
+        id=prompt("Input ID: ");
+        name=prompt("Input Name: ");
+        gender=prompt("Input Gender: ");
+        age=prompt("Input Age: ");
+        position=prompt("Input Position: ");
+        hour=parseInt(prompt("Input Hour of work: "));
+        rat=parseFloat(prompt("Input Hour of work: "));
+        salary=parseFloat(prompt("Input Salary: "));
+
+
+        total_salary= salary + (rat * hour);
+
+        document.write("ID: " + id + "<br/>");
+        document.write("Name: " + name + "<br/>");
+        document.write("Gender: " + gender + "<br/>");
+        document.write("Age: " + age + "<br/>");
+        document.write("Position: " + position + "<br/>");
+        document.write("Rat: " + rat +  "$" + "<br/>");
+        document.write("Hour of work: " + hour + "H" + "<br/>");
+        document.write("Salary: " + salary + "$" + "<br/>");
+        document.write("Total_Salary: " + total_salary + "$" + "<br/>");
+
+    </script>
+</body>
+</html>

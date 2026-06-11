@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+</head>
+<body>
+    <script>
+        let code;
+        let name;
+        let qty, dis , price;
+        let total_price, payment, payment_riel ,totalprice_riel;
+
+        code= prompt("Input code of product:");
+        name= prompt("Input name:");
+        qty= parseInt(prompt("Enter quantity:"));
+        dis= parseInt(prompt("Enter discount:"));
+        price= parseFloat(prompt("Enter price:"));
+
+        total_price= qty * price;
+        payment= total_price - (total_price * dis) / 100;
+        totalprice_riel= total_price * 4000;
+        payment_riel= payment * 4000;
+
+        document.write("Product Name: " + name + "<br>");
+        document.write("Price: " + price + "$" + "<br/>");
+        document.write("Quantity: " + qty + "<br/>");
+        document.write("Total Price: " + total_price.toFixed(2) + "$" + "<br/>");
+        document.write("Discount: " + dis + "%<br/>");
+        document.write("Payment: " + payment.toFixed(2) + "$" + "<br/>");
+        document.write("Total Price in Riel: " + totalprice_riel.toFixed(2) + "៛" + "<br/>");
+        document.write("Payment in Riel: " + payment_riel.toFixed(2) + "៛" + "<br/>");
+        
+    </script>
+</body>
+</html>
