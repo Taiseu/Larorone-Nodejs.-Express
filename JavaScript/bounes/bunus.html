@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <table class="table w-100">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Salary</th>
+                <th>Position</th>
+                <th>Bonus</th>
+                <th>Total Salary</th>
+            </tr>
+            <tr>
+                <td id="id"></td>
+                <td id="name"></td>
+                <td id="gender"></td>
+                <td id="salary"></td>
+                <td id="position"></td>
+                <td id="bonus"></td>
+                <td id="total_salary"></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+
+        let id, name, gender;
+        let salary, position,total_salary, bonus;
+
+        id = prompt("Enter ID: ");
+        name = prompt("Enter Name: ");
+        gender = prompt ("Enter Gender: ");
+        salary = parseFloat(prompt("Enter salary: "));
+        position = prompt("Enter position: ");
+
+        if(position.toLowerCase() === "manager"){
+            bonus = 20;
+            alert("you have bonus 20% of your salary");
+        }else if(position.toLowerCase === "accounting"){
+            bonus=15;
+            alert("you have bonus 15% of your salary");
+        }else if(position.toLowerCase === "it"){
+            bonus=25;
+           alert("you have bonus 25% of your salary");
+        }else{
+            bonus = 10;
+            alert("you have bonus 10% of your salary");
+
+        }
+        total_salary = salary + (salary*bonus)/100;
+
+        // write values into the table cells
+        document.getElementById("id").innerHTML = id;
+        document.getElementById("name").innerHTML = name;
+        document.getElementById("gender").innerHTML = gender;
+        document.getElementById("salary").innerHTML = salary;
+        document.getElementById("position").innerHTML = position;
+        document.getElementById("bonus").innerHTML = bonus + "%";
+        document.getElementById("total_salary").innerHTML = total_salary;
+
+        // document.write("ID: " + id + "</br>");
+        // document.write("Name: " + name + "</br>");
+        // document.write("Gender: " + gender + "</br>");
+        // document.write("Salary: " + salary + "</br>");
+        // document.write("Position: " + position + "</br>");
+        // document.write("Salary: " + salary + "</br>");
+        // document.write("Totalsalary: " + total_salary + "</br>");
+    </script>
+    
+</body>
+</html>

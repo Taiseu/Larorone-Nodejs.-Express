@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"></head>
+<body>
+    <div class="container-fluid p-5 d-flex b">
+        <form class="w-50 p-5 m-auto border">
+            <h1>Input score</h1> 
+            <label>HTML</label>
+            <input type="text" id="score1" class="mb-3 w-100 border-1 rounded-2 fs-5"><br>
+
+            <label>CSS</label>
+            <input type="text" id="score2" class="mb-3 w-100 border-1 rounded-2 fs-5"><br>
+
+            <label>JS</label>
+            <input type="text" id="score3" class="mb-3 w-100 border-1 rounded-2 fs-5"><br>
+
+            <label>Bootstrap</label>
+            <input type="text" id="score4" class="mb-3 w-100 border-1 rounded-2 fs-5"><br>
+            <br>
+            <button type="button" onclick="score()" class="btn fs-2 bg-primary rounded-4">Submit</button>
+            <button type="reset"class=" bg-danger">Reset</button>
+
+        </form>
+        <table class="table table-striped shadow ">
+            <tr>
+                <th>HTML</th>
+                <th>CSS</th>
+                <th>JS</th>
+                <th>Bootstrap</th>
+                <th>Total</th>
+                <th>Average</th>
+            </tr>
+            <tbody id="score">
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function score(){
+            let score1 = Number(document.getElementById("score1").value);
+            let score2 = Number(document.getElementById("score2").value);
+            let score3 = Number(document.getElementById("score3").value);
+            let score4 = Number(document.getElementById("score4").value);
+
+            let total = score1 + score2 + score3 + score4;
+            let avg = total/4;
+
+            document.getElementById("score").innerHTML+= `
+            <tr>
+            <td>${score1}</td>
+            <td>${score2}</td>
+            <td>${score3}</td>
+            <td>${score4}</td>
+            <td>${total}</td>
+            <td>${avg}</td>
+            </tr>
+            `
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

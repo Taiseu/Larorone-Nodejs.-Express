@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <div class="card-body w-50 m-auto shadow p-1 text-danger"> 
+        <h1>Enter number of loop</h1>
+        <input type="text" id="num" class="w-50 fs-4 rounded-4 border-1 ps-3"><br>
+        <button class="btn bg-warning text-black fw-bold fs-5 mt-3" onclick="Loop()">Submit</button>
+    </div>
+    <div class="w-50 shadow m-auto card">
+        <p style="color: green; font-weight: bold; font-size: 30px;" class="object-fit-cover  p-4" id="loop"></p>
+    </div>
+    <script>
+        function Loop(){
+            let num = Number(document.getElementById("num").value);
+            let sum = 0;
+            let write = "";
+
+            for (let i = 2; i <= num; i += 2) {
+                write += i + "+";
+                sum += i;
+            }
+            document.getElementById("loop").innerHTML = write + " = " + sum;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
