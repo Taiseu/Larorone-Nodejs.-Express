@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container d-flex gap-3 p-5">
+        <form class="w-50 p-5 border rounded">
+            <h1>Input Score</h1> 
+            <label>លេខរៀង</label>
+            <input type="text" id="no" class=" mb-3 fs-5"><br>
+            
+            <label>PHP</label>
+            <input type="text" id="score1" class=" mb-3 fs-5"><br>
+
+            <label>HTML</label>
+            <input type="text" id="score2" class=" mb-3 fs-5"><br>
+
+            <label>CSS</label>
+            <input type="text" id="score3" class=" mb-3 fs-5"><br>
+
+            <label>Bootstrap</label>
+            <input type="text" id="score4" class=" mb-3 fs-5"><br>
+            <br>
+            <button type="button" onclick="addScore()" class="btn btn-primary fs-5 rounded-4 me-2">Submit</button>
+            <button type="reset" class="btn btn-danger fs-5">Reset</button>
+        </form>
+
+        <div class="w-50">
+            <h2>Score Results</h2>
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>លេខរៀង</th>
+                        <th>PHP</th>
+                        <th>HTML</th>
+                        <th>CSS</th>
+                        <th>Bootstrap</th>
+                        <th>ពិន្ទុសរុប</th>
+                        <th>មធ្យមភាគ</th>
+                        <th>និទេស</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function addScore() {
+            let no = document.getElementById("no").value;
+            let score1 = Number(document.getElementById("score1").value);
+            let score2 = Number(document.getElementById("score2").value);
+            let score3 = Number(document.getElementById("score3").value);
+            let score4 = Number(document.getElementById("score4").value);
+
+            let total = score1 + score2 + score3 + score4;
+            let average = (total / 4);
+            let result = average >= 50 ? 'Pass' : 'Fail';
+
+            let row = `
+                <tr>
+                    <td>${no}</td>
+                    <td>${score1}</td>
+                    <td>${score2}</td>
+                    <td>${score3}</td>
+                    <td>${score4}</td>
+                    <td>${total}</td>
+                    <td>${average}</td>
+                    <td>${result}</td>
+                </tr>
+            `;
+
+            document.getElementById("scoreTable").innerHTML += row;
+        }
+    </script>
+</body>
+</html>

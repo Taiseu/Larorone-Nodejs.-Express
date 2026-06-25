@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"></head>
+<body>
+    <form class="card w-50 p-5 m-auto shadow-lg">
+        <label class="card w-50 fs-4  fw-bold">Quantity</label>
+        <input type="text" id="qty" class="fs-4 fw-bold border-0 bg-secondary ">
+        <label class="card w-50 fs-4  fw-bold">Select Product</label>
+        <select id="product" class=" fs-4 fw-semibold p-2 rounded-2">
+            <option value="1200">Iphone X 1200$</option>
+            <option value="540">Oppo 540$</option>
+            <option value="240">Vivo 240$</option>
+            <option value="440">Samsung 440$</option>
+            <option value="550">Xiaomi 550$</option>
+        </select>
+        <div class="d-flex justify-content-center align-content-center gap-4 mt-4">
+            <button type="button" onclick="price()" class="btn fs-4 fw-bold bg-primary rounded-4 text-light">Buy Now</button>
+        </div>
+    </form>
+
+    <!-- cart -->
+     <div class="cart w-50 m-auto">
+        <div id="cartTable"></div>
+     </div>
+    <script>
+    function price(){
+        let price = Number(document.getElementById("product").value);
+        let qty = Number(document.getElementById("qty").value);
+        let total = price * qty;
+        let dis = 0;
+
+        if (total <= 300){
+            dis = 10;
+        }
+        else if (total <= 400){
+            dis = 20;
+        }
+        else if (total <= 500){
+            dis = 30;
+        }
+
+        let pay = total - dis;
+        document.getElementById("cartTable").innerHTML = `
+            <table class="table table-bordered mt-4">
+                <tr><th>Price</th><td>${price}$</td></tr>
+                <tr><th>Quantity</th><td>${qty}</td></tr>
+                <tr><th>Total</th><td>${total}$</td></tr>
+                <tr><th>Discount</th><td>${dis}$</td></tr>
+                <tr><th>Pay</th><td>${pay}$</td></tr>
+            </table>
+        `;
+        alert(`Total price is ${total}$`);
+    }
+
+
+
+    
+    
+    
+    </script>
+
+
+    <!-- <div id="dis">HELLO</div>
+    <script>
+        document.getElementById("dis").innerHTML = '<marquee direction="right">HELLO ETEC Center</marquee>';
+    </script> -->
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

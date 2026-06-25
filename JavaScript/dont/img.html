@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <form class="card m-auto p-5 w-50 border-1 shadow-lg">
+        <h1 class="fw-bold text-danger">Enter Your Information</h1>
+        <div class="row g-3">
+            <div class = "col col-lg-6 ">
+                <label for="name" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter Name</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="name" placeholder=" your name">
+            </div>
+            <div class = "col col-lg-6">
+                <label for="year" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2 ">Enter Year</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="year" placeholder=" your year">
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class = "col col-lg-6 ">
+                <label for="room" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter Room</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="room" placeholder=" your room">
+            </div>
+            <div class = "col col-lg-6">
+                <label for="id" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter ID</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="id" placeholder=" your ID">
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class = "col col-lg-6 ">
+                <label for="phpscore" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter PHP Score</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="phpscore" placeholder=" your PHP score">
+            </div>
+            <div class = "col col-lg-6">
+                <label for="htmlscore" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter HTML Score</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="htmlscore" placeholder=" your HTML score">
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class = "col col-lg-6 ">
+                <label for="cssscore" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter CSS Score</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="cssscore" placeholder=" your CSS score">
+            </div>
+            <div class = "col col-lg-6">
+                <label for="bootstrapscore" class="form-label text-black fw-bold  fs-5 rounded-4 mb-2 p-2">Enter Bootstrap Score</label>
+                <input type="text" class="form-control w-100 border-0 shadow bg-secondary bg-opacity-25" id="bootstrapscore" placeholder=" your Bootstrap score">
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-content-center gap-4 mt-4">
+            <button type="submit" class="btn btn-primary fs-4 rounded-4 ">Submit</button>
+            <button type="reset" class="btn btn-danger fs-4 rounded-4">Reset</button>
+
+        </div>
+    </form>
+    <div class="container p-3 shadow rounded-3 bg-light " id="results" style="display:none;"></div>
+
+    <script>
+        function student(e){
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const year = document.getElementById('year').value;
+            const room = document.getElementById('room').value;
+            const id = document.getElementById('id').value;
+            const phpscore = Number(document.getElementById('phpscore').value);
+            const htmlscore = Number(document.getElementById('htmlscore').value);
+            const cssscore = Number(document.getElementById('cssscore').value);
+            const bootstrapscore = Number(document.getElementById('bootstrapscore').value);
+
+            const total = phpscore + htmlscore + cssscore + bootstrapscore;
+            const average = total / 4;
+
+            let grade = 'F';
+            if(average > 90) grade = 'A';
+            else if(average > 80) grade = 'B';
+            else if(average > 70) grade = 'C';
+            else if(average > 60) grade = 'D';
+            else if(average > 50) grade = 'E';
+            else grade = 'F';
+
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            results.innerHTML = `
+                <div>
+                    <h1>ឈ្មោះសិស្ស​ <strong class="text-danger"> ${name}</strong>​ ឆ្នាំទី<strong class="text-danger"> ${year}</strong> បន្ទប់<strong class="text-danger"> ${room}</strong></h1>
+                    <table border="2" class="w-100 table">
+                        <thead>
+                            <tr>
+                                <th>លេខរៀង</th>
+                                <th>PHP</th>
+                                <th>HTML</th>
+                                <th>CSS</th>
+                                <th>Bootstrap</th>
+                                <th>Total Score</th>
+                                <th>Average</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${id}</td>
+                                <td>${phpscore}</td>
+                                <td>${htmlscore}</td>
+                                <td>${cssscore}</td>
+                                <td>${bootstrapscore}</td>
+                                <td>${total}</td>
+                                <td>${average.toFixed(2)}</td>
+                                <td>${grade}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>`;
+        }
+
+        document.querySelector('form').addEventListener('submit', student);
+    </script>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
