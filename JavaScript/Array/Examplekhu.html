@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"></head>
+</head>
+<body>
+    <form class="card w-50 m-auto p-5 rounded-4">
+        <h1 class="text-danger fw-bold font-monospace">Create Student</h1>
+        <div class="row">
+            <div class="col col-6">
+                <label class="text-black fs-5 my-2">Enter Name</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="col col-6">
+                <label class="text-black fs-5 my-2">Enter Gender</label>
+                <select class="form-control" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="col col-6"> 
+                <label class="text-black fs-5 my-2">Enter Phone</label>
+                <input type="text" class="form-control" id="phone">
+            </div>
+            <div class="col col-6">
+                <label class="text-black fs-5 my-2">Enter Building</label>
+                <input type="text" class="form-control" id="building">
+            </div>
+            <div class="col col-6">
+                <label class="text-black fs-5 my-2">Enter Room</label>
+                <input type="text" class="form-control" id="room">
+            </div>
+            <div class="col col-6">
+                <label class="text-black fs-5 my-2">Enter Course</label>
+                <input type="text" class="form-control" id="course">
+            </div>
+            <button class="w-25 text-white bg-danger rounded-3  mt-4" type="button" onclick="create()" style="border: none; padding: 5px 10px; cursor: pointer;">Create</button>
+        </div>
+    </form>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>   
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>Building</th>
+                    <th>Room</th>
+                    <th>Course</th> 
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentTable">
+
+            </tbody>
+                
+        </table>
+        <script>
+            let students = [];
+
+            function create(){
+                let name = document.getElementById("name").value;
+                let gender = document.getElementById("gender").value;
+                let phone = document.getElementById("phone").value;
+                let building = document.getElementById("building").value;
+                let room = document.getElementById("room").value;
+                let course = document.getElementById("course").value;
+
+                if(name === "" || gender === "" || phone === "" || building === "" || room === "" || course === "") return;
+
+                let student= {
+                    id:students.length + 1,
+                    name:name,
+                    gender:gender,
+                    phone:phone,
+                    building:building,
+                    room:room,
+                    course:course
+                }
+                students.push(student);
+
+                display();
+
+                document.getElementById("name").value = "";
+                document.getElementById("gender").value = "Male";
+                document.getElementById("phone").value = "";
+                document.getElementById("building").value = "";
+                document.getElementById("room").value = "";
+                document.getElementById("course").value = "";
+            }
+            function display(){
+                let result = "";
+
+                students.forEach(function(student){
+                    result += `
+                    <tr>
+                        <td>${student.id}</td>
+                        <td>${student.name}</td>
+                        <td>${student.gender}</td>
+                        <td>${student.phone}</td>
+                        <td>${student.building}</td>
+                        <td>${student.room}</td>
+                        <td>${student.course}</td>
+                        <td>
+                            <button style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer;" onclick="remove(${student.id})">Remove</button>
+                        </td>
+                    </tr>
+                    `;
+                });
+                document.getElementById("studentTable").innerHTML = result;
+            }
+            
+            function remove(id){
+                // students = students.filter(function(student){
+                //     return student.id !== id;
+                // });
+                // display();or
+                let index = students.findIndex(function(student){
+                    return student.id === id;
+                });
+                if(index !== -1){
+                    students.splice(index, 1);
+                    display();
+                }
+
+            }
+        </script>
+
+    </div>
+    
+</body>
+</html>

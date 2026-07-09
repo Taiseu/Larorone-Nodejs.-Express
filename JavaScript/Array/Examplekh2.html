@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <form class="card w-50 m-auto p-5 rounded-4">
+        <h1 class="text-danger fw-bold font-monospace">Create Student</h1>
+        <div class="row">
+            <div class="col col-4">
+                <label class="text-black fs-5 my-2">Enter ID</label>
+                <input type="text" class="form-control" id="id">
+            </div>
+            <div class="col col-4">
+                <label class="text-black fs-5 my-2">Enter Name</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="col col-4">
+                <label class="text-black fs-5 my-2">Enter Gender</label>
+                <select class="form-control" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <button class="w-25 text-white bg-danger rounded-3  mt-4" type="button" onclick="create()" style="border: none; padding: 5px 10px; cursor: pointer;">Create</button>
+        </div>
+    </form>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>   
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="studentTable">
+
+            </tbody>
+                
+        </table>
+        <script>
+            let students = [];
+
+            function create(){
+                let id = document.getElementById("id").value;
+                let name = document.getElementById("name").value;
+                let gender = document.getElementById("gender").value;
+
+                if(name === "" || gender === "") return;
+
+                let student= {
+                    id:students.length + 1,
+                    name:name,
+                    gender:gender,
+                }
+                students.push(student);
+
+                display();
+                document.getElementById("id").value = "";
+                document.getElementById("name").value = "";
+                document.getElementById("gender").value = "Male";
+            }
+            function display(){
+                let result = "";
+                for (let i = 0; i < students.length; i++) {
+                    let student = students[i];
+                    result += `<tr>`;
+                    result += `<td>${student.id}</td>`;
+                    result += `<td>${student.name}</td>`;
+                    result += `<td>${student.gender}</td>`;
+                    result += `<td><button class="btn btn-primary btn-sm" onclick="edit(${student.id})">Edit</button><button class="btn btn-danger btn-sm" onclick="remove(${student.id})">Delete</button></td>`;
+                    result += `</tr>`;
+                }
+                document.getElementById("studentTable").innerHTML = result;
+            }
+            
+            function edit(id){
+                const index = students.findIndex(s => s.id === id);
+                if(index === -1) return;
+                const student = students[index];
+                document.getElementById("id").value = student.id;
+                document.getElementById("name").value = student.name;
+                document.getElementById("gender").value = student.gender;
+
+                // change button to Update
+                const btn = document.querySelector('button[onclick="create()"]');
+                if(btn){
+                    btn.textContent = 'Update';
+                    btn.setAttribute('onclick', `update(${id})`);
+                }
+            }
+
+            function update(id){
+                const name = document.getElementById("name").value;
+                const gender = document.getElementById("gender").value;
+                const index = students.findIndex(s => s.id === id);
+                if(index === -1) return;
+                students[index].name = name;
+                students[index].gender = gender;
+                display();
+
+                // reset form
+                document.getElementById("id").value = "";
+                document.getElementById("name").value = "";
+                document.getElementById("gender").value = "Male";
+
+                const btn = document.querySelector('button[onclick^="update("]');
+                if(btn){
+                    btn.textContent = 'Create';
+                    btn.setAttribute('onclick', 'create()');
+                }
+            }
+            function remove(id){
+                // students = students.filter(function(student){
+                //     return student.id !== id;
+                // });
+                // display();or
+                let index = students.findIndex(function(student){
+                    return student.id === id;
+                });
+                if(index !== -1){
+                    students.splice(index, 1);
+                    display();
+                }
+
+            }
+        </script>
+
+    </div>
+    
+</body>
+</html>

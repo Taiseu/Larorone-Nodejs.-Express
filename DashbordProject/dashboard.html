@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body class="bg-light text-dark">
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <aside class="col-12 col-md-3 col-xl-2 bg-primary text-white p-4">
+                <h2 class="h4 mb-4">Home</h2>
+                <nav class="nav flex-column gap-2">
+                    <a href="#" class="nav-link text-white bg-white bg-opacity-10 rounded">Dashboard</a>
+                    <a href="./Users.html" class="nav-link text-white">Users</a>
+                    <a href="./product.html" class="nav-link text-white">Products</a>
+                    <a href="#" class="nav-link text-white">Orders</a>
+                    <a href="#" class="nav-link text-white">Settings</a>
+                </nav>
+            </aside>
+
+            <div class="col-12 col-md-9 col-xl-10 p-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+                    <div>
+                        <h1 class="h3 mb-1">Dashboard</h1>
+                        <p class="text-muted mb-0">Admin overview and statistics</p>
+                    </div>
+                    <div class="bg-white rounded-pill px-3 py-2 shadow-sm">Admin User</div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-12 col-md-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <p class="text-uppercase text-muted small mb-2">Total Users</p>
+                                <h2 class="card-title">1,248</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <p class="text-uppercase text-muted small mb-2">Total Products</p>
+                                <h2 class="card-title">324</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <p class="text-uppercase text-muted small mb-2">Orders Today</p>
+                                <h2 class="card-title">56</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12 col-lg-7">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h5 mb-3">Recent Users</h3>
+                                <div class="table-responsive">
+                                    <table class="table mb-0 align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Sokha</td>
+                                                <td>sokha@email.com</td>
+                                                <td><span class="badge bg-primary">Active</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mina</td>
+                                                <td>mina@email.com</td>
+                                                <td><span class="badge bg-primary">Active</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Rithy</td>
+                                                <td>rithy@email.com</td>
+                                                <td><span class="badge bg-primary">Active</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h3 class="h5 mb-3">Products</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                        <span>Laptop</span>
+                                        <strong>$899</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                        <span>Smartphone</span>
+                                        <strong>$499</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 border-0">
+                                        <span>Headphones</span>
+                                        <strong>$129</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-+rlXf0JjBmzN6D3aB9EAq9hK+R+Njc2o3tP0w3B9vy8kIhEEA6fQJ8e5hvLT2g94F" crossorigin="anonymous"></script>
+</body>
+</html>

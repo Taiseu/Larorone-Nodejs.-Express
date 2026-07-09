@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"></head>
+<body>
+    <div class="container mt-4 border p-4 rounded border-black">
+        <div class="gap-4 w-50 m-auto">
+            <input type="text" id="input" class="form-control" style="width: 75%; font-weight: bold; margin-bottom: 10px; border: 1px solid black;" placeholder="Enter a value">
+            <button onclick="add()" class="btn btn-primary" style="font-weight: bold;">Add</button>
+            <button onclick="remove()" class="btn btn-danger" style="font-weight: bold;">Delete</button>
+        </div>
+
+    </div>
+
+
+    <ul id="li">
+    </ul>
+    <script>
+        let array = [];
+
+        function add(){
+            let input = document.getElementById("input");
+            if(input.value == ""){
+                alert("Please enter a value");
+                return;
+            }
+            array.push(input.value);
+            display();
+            input.value = "";
+        }
+        function display(){
+            let result = document.getElementById("li");
+            result.innerHTML = ""; // Clear the list before displaying
+
+            for (let i=0; i<array.length; i++){
+                result.innerHTML += `<li>${array[i]}</li>`;
+            }
+        }
+        function remove(){
+            array.pop();
+            display();
+        }
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script></body>
+</html>

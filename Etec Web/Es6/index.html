@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+
+        <script>
+            function num(n){
+                return  n;
+            }
+            //------------
+            const display = () =>{
+                return num(10) + 7;
+            }
+            document.write("Sum = "+display() + "</br>");
+            
+            
+            const student = [
+                {
+                id:1,
+                name:"Sok Jame",
+                gender: "Male",
+                Grade: "A",
+                average: 99.99,
+            }
+        ]
+
+        // const Display = () =>{
+        //     document.write("<==========================></br>");
+        //     document.write("Student ID : " + student[0].id + "</br>")
+        //     document.write("Student Name : " + student[0].name + "</br>")
+        //     document.write("Student Gender : " + student[0].gender + "</br>")
+        //     document.write("Student Grade : " + student[0].Grade + "</br>")
+        //     document.write("Student Average : " + student[0].average + "</br>")
+        // }
+        // Display();
+        const Display = () => {
+            student.forEach((s) => {
+                document.write("<==========================></br>");
+                document.write("Student ID : " + s.id + "</br>");
+                document.write("Student Name : " + s.name + "</br>");
+                document.write("Student Gender : " + s.gender + "</br>");
+                document.write("Student Grade : " + s.Grade + "</br>");
+                document.write("Student Average : " + s.average + "</br>");
+            });
+        }
+        Display();
+        
+        </script>
+</center>
+    
+</body>
+</html>
